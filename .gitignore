@@ -1,0 +1,27 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+env/
+venv/
+
+# Flask uploaded or converted files
+uploads/
+converted/
+
+# Logs and database (if any)
+*.log
+*.sqlite3
+
+# macOS system files
+.DS_Store
+
+# VS Code or PyCharm settings
+.vscode/
+.idea/
+
+# Windows system files
+Thumbs.db

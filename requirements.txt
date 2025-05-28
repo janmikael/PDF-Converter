@@ -1,0 +1,8 @@
+# Updated requirements.txt
+Flask==2.3.2
+python-dotenv==1.0.0
+docx2pdf==0.1.8
+pdfkit==1.0.0
+pywin32==310  # Updated from 306 to 310
+comtypes==1.2.0
+flask_talisman==1.0.0

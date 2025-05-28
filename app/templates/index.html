@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+<div class="upload-container">
+  <form
+    method="POST"
+    action="{{ url_for('upload_file') }}"
+    enctype="multipart/form-data"
+    class="upload-form"
+  >
+    <div class="form-group">
+      <label for="file">Select a file to convert:</label>
+      <input
+        type="file"
+        name="file"
+        id="file"
+        accept=".txt,.doc,.docx,.xls,.xlsx"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn">Convert to PDF</button>
+    </div>
+  </form>
+
+  <div class="file-info">
+    <h3>Supported File Types:</h3>
+    <ul>
+      <li>Text files (.txt)</li>
+      <li>Word documents (.doc, .docx)</li>
+      <li>Excel spreadsheets (.xls, .xlsx)</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

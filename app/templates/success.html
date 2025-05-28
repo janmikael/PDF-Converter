@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<div class="success-container">
+  <h2>Conversion Successful!</h2>
+  <p>Your file has been converted to PDF.</p>
+
+  <div class="action-buttons">
+    <a
+      href="{{ url_for('download_file', download_id=download_id) }}"
+      class="btn"
+      >Download {{ filename }}</a
+    >
+    <a href="{{ url_for('home') }}" class="btn">Convert Another File</a>
+  </div>
+</div>
+{% endblock %}
