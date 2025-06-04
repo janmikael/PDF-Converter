@@ -1,35 +1,35 @@
-# app/utils/file_handling.py
-import os
-from werkzeug.utils import secure_filename
+from pathlib import Path
 from flask import current_app
+import os
 
-def save_uploaded_file(file):
-    """Securely save uploaded file to the uploads folder"""
-    if not os.path.exists(current_app.config['UPLOAD_FOLDER']):
-        os.makedirs(current_app.config['UPLOAD_FOLDER'])
-    
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-    file.save(file_path)
-    return file_path
+def save_uploaded_file(file, filename):
+    upload_path = current_app.config['UPLOAD_FOLDER'] / filename
+    file.save(upload_path)
+    return upload_path
 
-def get_converted_filename(original_filename):
-    """Generate a filename for the converted PDF"""
-    base = os.path.splitext(original_filename)[0]
-    return f"{base}.pdf"
+def cleanup_file(filepath):
+    """Safely remove a file"""
+    try:
+        if filepath.exists():
+            filepath.unlink()
+            current_app.logger.info(f"Deleted temporary file: {filepath}")
+        else:
+            current_app.logger.info(f"File not found for cleanup: {filepath}")
+    except Exception as e:
+        current_app.logger.error(f"Error deleting file {filepath}: {e}")
 
-def save_converted_file(pdf_data, original_filename):
-    """Save the converted PDF to the converted folder"""
-    if not os.path.exists(current_app.config['CONVERTED_FOLDER']):
-        os.makedirs(current_app.config['CONVERTED_FOLDER'])
-    
-    filename = get_converted_filename(os.path.basename(original_filename))
-    file_path = os.path.join(current_app.config['CONVERTED_FOLDER'], filename)
-    
-    if isinstance(pdf_data, bytes):
-        with open(file_path, 'wb') as f:
-            f.write(pdf_data)
-    else:
-        pdf_data.save(file_path)
-    
-    return file_path
+def cleanup_folder(folder_path):
+    """Clean all files inside a given folder"""
+    try:
+        for file in Path(folder_path).glob("*"):
+            if file.is_file():
+                cleanup_file(file)
+    except Exception as e:
+        current_app.logger.error(f"Error cleaning folder {folder_path}: {e}")
+
+def cleanup_all_temp_folders():
+    """Clean up files in uploads, converted, and temp folders"""
+    for folder_name in ['UPLOAD_FOLDER', 'CONVERTED_FOLDER', 'TEMP_FOLDER']:
+        folder_path = current_app.config[folder_name]
+        current_app.logger.info(f"Cleaning folder: {folder_path}")
+        cleanup_folder(folder_path)

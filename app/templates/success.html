@@ -1,15 +1,60 @@
 {% extends "base.html" %} {% block content %}
 <div class="success-container">
-  <h2>Conversion Successful!</h2>
-  <p>Your file has been converted to PDF.</p>
+  <div
+    class="success-icon"
+    aria-hidden="true"
+    style="text-align: center; margin-bottom: 20px"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="#43cea2"
+      width="64px"
+      height="64px"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+    </svg>
+  </div>
 
-  <div class="action-buttons">
+  <h2>Conversion Successful!</h2>
+
+  <p class="file-info-text" style="text-align: center; margin-top: 10px">
+    Your file <strong>{{ filename }}</strong> is ready.
+  </p>
+  <p
+    class="file-info-text"
+    style="text-align: center; color: #bbb; margin-top: 5px"
+  >
+    ({{ file_size }})
+  </p>
+
+  <div
+    class="action-buttons"
+    style="
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    "
+  >
     <a
       href="{{ url_for('download_file', download_id=download_id) }}"
-      class="btn"
-      >Download {{ filename }}</a
+      class="btn download-btn"
+      id="downloadLink"
+      style="min-width: 160px"
     >
-    <a href="{{ url_for('home') }}" class="btn">Convert Another File</a>
+      <i class="fas fa-download" aria-hidden="true"></i> Download PDF
+    </a>
+    <a
+      href="{{ url_for('home') }}"
+      class="btn secondary-btn"
+      style="min-width: 160px"
+    >
+      <i class="fas fa-sync-alt" aria-hidden="true"></i> Convert Another File
+    </a>
   </div>
 </div>
 {% endblock %}

@@ -1,13 +1,14 @@
-/* app/static/css/style.css */
+/* Base Layout */
 body {
-  font-family: "Arial", sans-serif;
+  font-family: "Inter", sans-serif;
   line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
-  color: #333;
+  background: rgb(5, 8, 22);
+  color: #fff;
 }
 
+/* Container */
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -22,62 +23,143 @@ header {
 h1,
 h2,
 h3 {
-  color: #2c3e50;
+  color: #fff;
 }
 
+/* Upload + Success + Preview Boxes */
 .upload-container,
 .success-container,
 .preview-container {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: #0a122f;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  max-width: 650px;
+  margin: 40px auto;
+  transition: all 0.3s ease-in-out;
+  color: #fff;
 }
 
+/* Form Inputs */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
 }
 
 label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  word-wrap: break-word;
 }
 
+label:hover {
+  color: #43cea2;
+}
+
+/* Custom styled file input */
 input[type="file"] {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 12px 15px;
+  border: 1.5px solid #444;
+  border-radius: 8px;
+  background: #1b254f;
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  outline-offset: 2px;
+  outline-color: transparent;
+  box-sizing: border-box;
+  min-height: 48px;
 }
 
+input[type="file"]::file-selector-button {
+  cursor: pointer;
+  background: linear-gradient(to right, #43cea2, #185a9d);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(to right, #185a9d, #43cea2);
+}
+
+input[type="file"]:focus {
+  outline-color: #43cea2;
+  border-color: #43cea2;
+  background: #22336e;
+}
+
+/* File Constraints Text */
+.file-constraints {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+.file-constraints strong {
+  color: #fff;
+}
+
+/* Buttons */
 .btn {
   display: inline-block;
-  background: #3498db;
+  background: linear-gradient(to right, #43cea2, #185a9d);
   color: white;
-  padding: 10px 20px;
+  padding: 14px 28px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  text-decoration: none;
   font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  user-select: none;
+  white-space: nowrap;
 }
 
 .btn:hover {
-  background: #2980b9;
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(67, 206, 162, 0.3);
 }
 
-.action-buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
+/* Secondary button */
+.secondary-btn {
+  background: #6c757d;
+  color: #fff;
 }
 
+.secondary-btn:hover {
+  background: #5a6268;
+}
+
+/* File Info */
 .file-info {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f9f9f9;
+  margin-top: 35px;
+  padding: 25px;
+  background: #11203b;
   border-radius: 8px;
+  border-left: 5px solid #43cea2;
+  color: #fff;
+}
+
+.file-info h3 {
+  margin-top: 0;
+  color: #43cea2;
 }
 
 .file-info ul {
@@ -86,25 +168,166 @@ input[type="file"] {
 }
 
 .file-info li {
-  padding: 5px 0;
+  padding: 10px 0 10px 24px;
+  position: relative;
+  color: #ddd;
 }
 
+.file-info li:before {
+  content: "•";
+  color: #43cea2;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 10px;
+}
+
+/* File Note */
+.file-note {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-style: italic;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #2a3a62;
+}
+
+/* Progress Bar */
+.progress {
+  height: 20px;
+  background: #1b254f;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #43cea2, #185a9d);
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+#statusMessage {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* Success */
+.success-container {
+  text-align: center;
+  color: #fff;
+}
+
+.success-container h2 {
+  color: #43cea2;
+  margin-bottom: 15px;
+}
+
+/* Flash Messages */
 .flash-messages {
   margin-bottom: 20px;
 }
 
 .flash-message {
-  padding: 10px;
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  padding: 12px;
+  background: #b74c4c;
+  color: #fff;
+  border: 1px solid #8c3636;
+  border-radius: 6px;
+  margin-bottom: 15px;
 }
 
+/* PDF Viewer */
 .pdf-viewer {
-  margin: 20px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  margin: 25px 0;
+  border: 1px solid #333;
+  border-radius: 6px;
   overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  background: #0f1a35;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .upload-container,
+  .success-container,
+  .preview-container {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-size: 0.95rem;
+  }
+
+  input[type="file"] {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    padding: 14px 0;
+  }
+}
+
+.success-container {
+  text-align: center;
+  color: #fff;
+  padding: 20px 15px;
+}
+
+.success-container h2 {
+  color: #43cea2;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.file-info-text {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  color: #ddd;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.action-buttons .btn {
+  min-width: 160px;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .success-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .file-info-text {
+    font-size: 1rem;
+  }
+
+  .action-buttons .btn {
+    width: 100%;
+    min-width: auto;
+  }
 }

@@ -8,11 +8,18 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container">
       <header>
         <h1>File to PDF Converter</h1>
+        <p>
+          Convert Files documents into secures and professional-looking PDFs.
+        </p>
       </header>
 
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -25,6 +32,40 @@
       {% endif %} {% endwith %}
 
       <main>{% block content %}{% endblock %}</main>
+
+      <!-- Footer with copyright and GitHub link -->
+      <footer
+        class="site-footer"
+        style="
+          text-align: center;
+          margin-top: 40px;
+          padding: 20px 0;
+          font-size: 0.9rem;
+          color: #888;
+        "
+      >
+        <p>
+          &copy; {{ current_year if current_year else "2025" }} JMDev
+          &nbsp;|&nbsp;
+          <a
+            href="https://github.com/janmikael"
+            target="_blank"
+            rel="noopener"
+            style="color: #43cea2; text-decoration: none; margin-right: 10px"
+          >
+            <span class="sr-only">GitHub</span>
+          </a>
+          <span style="color: #888">|</span>
+          <a
+            href="https://www.linkedin.com/in/michael-web-developer/"
+            target="_blank"
+            rel="noopener"
+            style="color: #0077b5; text-decoration: none; margin-left: 10px"
+          >
+            <span class="sr-only">LinkedIn</span>
+          </a>
+        </p>
+      </footer>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>

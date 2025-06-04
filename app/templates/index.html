@@ -1,33 +1,39 @@
 {% extends "base.html" %} {% block content %}
-<div class="upload-container">
-  <form
-    method="POST"
-    action="{{ url_for('upload_file') }}"
-    enctype="multipart/form-data"
-    class="upload-form"
-  >
+<div class="upload-container animated fadeIn">
+  <form id="uploadForm" class="upload-form">
     <div class="form-group">
-      <label for="file">Select a file to convert:</label>
+      <label for="file">Upload your file</label>
       <input
         type="file"
         name="file"
         id="file"
-        accept=".txt,.doc,.docx,.xls,.xlsx"
         required
+        accept=".txt,.doc,.docx,.xls,.xlsx"
       />
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn">Convert to PDF</button>
-    </div>
+    <button type="button" id="convertBtn" class="btn">Convert to PDF</button>
   </form>
 
+  <div id="progressContainer" class="progress-section" style="display: none">
+    <div class="progress">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+    <p id="statusMessage">Preparing conversion...</p>
+  </div>
+
   <div class="file-info">
-    <h3>Supported File Types:</h3>
+    <h3>File Requirements:</h3>
     <ul>
-      <li>Text files (.txt)</li>
-      <li>Word documents (.doc, .docx)</li>
-      <li>Excel spreadsheets (.xls, .xlsx)</li>
+      <li>Maximum file size: <strong>100MB</strong></li>
+      <li>Text files (<strong>.txt</strong>)</li>
+      <li>Word documents (<strong>.doc</strong>, <strong>.docx</strong>)</li>
+      <li>
+        Excel spreadsheets (<strong>.xls</strong>, <strong>.xlsx</strong>)
+      </li>
     </ul>
+    <div class="file-note">
+      <p>⚠️ Note: Very large files may take longer to process</p>
+    </div>
   </div>
 </div>
 {% endblock %}
