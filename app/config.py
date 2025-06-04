@@ -22,7 +22,7 @@ class Config:
     
     # Timeouts (seconds)
     LIBREOFFICE_TIMEOUT = 300  # 5 minutes
-    WKHTMLTOPDF_TIMEOUT = 60   # 1 minute
+    WKHTMLTOPDF_TIMEOUT = 90 # 1.5 minutes
     
     @classmethod
     def init_app(cls, app=None):

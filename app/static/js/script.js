@@ -36,14 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
     convertBtn.disabled = true;
     progressContainer.style.display = "block";
     progressBar.style.width = "0%";
-    progressBar.style.backgroundColor = "#4caf50"; // green progress bar
+    progressBar.style.backgroundColor = "#4caf50"; // green for upload
     statusMessage.textContent = "Uploading file...";
 
     const formData = new FormData();
     formData.append("file", file);
 
-    // Use fetch API with progress not supported natively,
-    // so fallback to XMLHttpRequest for progress bar during upload
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/upload", true);
 
@@ -65,7 +63,18 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
         if (response.redirect) {
-          monitorConversion(response.download_id);
+          // Show upload complete message before starting conversion
+          statusMessage.textContent = "Upload complete! Starting conversion...";
+          // Keep progress bar green at 100%
+          progressBar.style.width = "100%";
+          progressBar.style.backgroundColor = "#4caf50";
+
+          setTimeout(() => {
+            // Reset bar and change color for conversion phase
+            progressBar.style.width = "0%";
+            progressBar.style.backgroundColor = "#2196F3"; // blue for conversion
+            monitorConversion(response.download_id);
+          }, 1000);
         } else if (response.error) {
           handleError(response.error);
         } else {
@@ -93,8 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function monitorConversion(downloadId) {
     statusMessage.textContent = "Converting file...";
-    progressBar.style.width = "0%";
-    progressBar.style.backgroundColor = "#4caf50";
 
     function checkStatus() {
       fetch(`/status/${downloadId}`)
@@ -105,19 +112,24 @@ document.addEventListener("DOMContentLoaded", function () {
           return response.json();
         })
         .then((data) => {
-          if (data.complete) {
+          if (data.status === "completed") {
             progressBar.style.width = "100%";
             statusMessage.textContent = "Conversion complete!";
             setTimeout(() => {
               window.location.href = `/success/${downloadId}`;
             }, 1000);
-          } else if (data.error) {
-            throw new Error(data.error);
-          } else {
+          } else if (data.status === "failed") {
+            // Use the detailed message sent from backend
+            handleError(
+              data.message || "Conversion failed due to unknown error."
+            );
+          } else if (data.status === "processing") {
             const currentWidth = parseInt(progressBar.style.width) || 0;
             const newWidth = Math.min(currentWidth + 5, 95);
             progressBar.style.width = newWidth + "%";
             setTimeout(checkStatus, 2000);
+          } else {
+            handleError("Unknown conversion status.");
           }
         })
         .catch((error) => {
